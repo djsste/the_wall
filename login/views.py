@@ -21,11 +21,11 @@ def create_user(request):
         User.objects.create(
         first_name = request.POST['first_name'],
         last_name = request.POST['last_name'],
-        email = request.POST['email'],
+        email = request.POST['email'].lower(),
         password = hashedpw,
         birthday = request.POST['birthday']
     )
-    return redirect('/')
+    return redirect('/wall_redirect')
 
 def login(request):
     if request.method == "GET":
@@ -48,7 +48,7 @@ def success(request):
     context = {
         'user': user
     }
-    return render(request, 'success.html', context)
+    return render(request, 'the_wall.html', context)
 
 def logout(request):
     request.session.flush()
@@ -59,3 +59,6 @@ def delete_user(request, id):
     x = User.objects.get(id = id)
     x.delete()
     return redirect('/')
+
+def wall_index(request):
+    return render(request, 'the_wall.html')
