@@ -38,8 +38,9 @@ class UserManager(models.Manager):
                 errors['logpassword'] = "That username and or password is incorrect"
         else:
             errors['logusername'] = "There is no account associated with that email"
-        return errors
 
+        return errors
+        
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
