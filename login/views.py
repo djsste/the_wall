@@ -18,14 +18,15 @@ def create_user(request):
         return redirect('/')
     else:
         hashedpw = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
-        User.objects.create(
+        new_user = User.objects.create(
         first_name = request.POST['first_name'],
         last_name = request.POST['last_name'],
         email = request.POST['email'].lower(),
         password = hashedpw,
         birthday = request.POST['birthday']
     )
-    return redirect('/wall_redirect')
+    request.session['user_id'] = new_user.id
+    return redirect('/wall')
 
 def login(request):
     if request.method == "GET":
@@ -39,7 +40,7 @@ def login(request):
         user = User.objects.get(email=request.POST['logemail'])
         request.session['user_id'] = user.id
         messages.success(request, "You have successfully logged in!")
-        return redirect('/success')
+        return redirect('/wall')
 
 def success(request):
     if 'user_id' not in request.session:
@@ -52,13 +53,9 @@ def success(request):
 
 def logout(request):
     request.session.flush()
-    
     return redirect('/')
 
 def delete_user(request, id):
     x = User.objects.get(id = id)
     x.delete()
     return redirect('/')
-
-def wall_index(request):
-    return render(request, 'the_wall.html')
