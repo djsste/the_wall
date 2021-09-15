@@ -30,14 +30,14 @@ class UserManager(models.Manager):
         return errors
     def login_validator(self, postData):
         errors = {}
-        login_user = User.objects.filter(email=postData['logemail'])
+        login_user = User.objects.filter(email=postData['log_email'])
         if len(login_user) > 0:
-            if bcrypt.checkpw(postData['logpassword'].encode(), login_user[0].password.encode()):
+            if bcrypt.checkpw(postData['log_password'].encode(), login_user[0].password.encode()):
                 print('password matches')
             else:
-                errors['logpassword'] = "That username and or password is incorrect"
+                errors['log_password'] = "That username and or password is incorrect"
         else:
-            errors['logusername'] = "There is no account associated with that email"
+            errors['log_username'] = "That username and or password is incorrect"
 
         return errors
         

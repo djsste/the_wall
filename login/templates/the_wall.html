@@ -5,12 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Successful Log In Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%  static 'the_wall_styling.css' %}">
 </head>
-<body>
-    <h1>the wall</h1>
-    <form action="/logout" method="POST">
-        {% csrf_token %}
-        <input type="submit" name="logout" id="logout" value="Log Out">
-    </form>
-</body>
+<div id=wrapper>
+    <header>
+        <h2 id=codingdojo>CodingDojo Wall</h2>
+        <p id=welcome>Welcome {{user.first_name}}</p>
+        <a href="/logout">Log Out</a>
+    </header>
+    <body>
+        <div id=add_message>
+            <p>Post a message</p> 
+            <form action="/create_message" method="POST">
+                {% csrf_token %}
+                <textarea name="user_message"  cols="87" rows="5"></textarea><br>
+                <input type="submit" id=message_button value="Post a message">
+            </form>
+        </div>
+        <div id=comment_section>
+            {% for message in messages.all reversed %}
+                <p>
+                    {{message.user.first_name}} {{message.user.last_name}} {{message.created_at|date:"F dS, Y"}}
+                    {% if message in user.messages.all %}
+                    <a href="{% url 'delete_message' id=message.id %}">delete</a>
+                    {% endif %}
+                    
+                </p>
+                <p id=message_content>{{message.message}}</p>
+                {% for comment in message.comments.all reversed %}
+                    <p id=comment_header>{{comment.user.first_name}} {{comment.user.last_name}} {{message.created_at|date:"M dS, Y"}}</p>
+                    <p id=comment_content>{{comment.comment}}</p>
+                {% endfor %}
+                <div id=add_comment>
+                    <form action="{% url 'create_comment' id=message.id %}" method="POST">
+                        {% csrf_token %}
+                        <textarea name="user_comment"  cols="70" rows="2"></textarea><br>
+                        <input type="submit" id=comment_button value="Post a comment">
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </body>
+    
+</div>
 </html>

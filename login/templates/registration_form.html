@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form and Login</title>
     {% load static %}
-    <link rel="stylesheet" href="{%  static 'style.css' %}">
+    <link rel="stylesheet" href="{%  static 'registration_styling.css' %}">
 </head>
 <body>
     <div id=wrapper>
@@ -35,16 +35,15 @@
                     {% endfor %}
                 </ul>
             {% endif %}
-            
         </div>
         <div id=login>
             <h1>Login</h1>
             <form action="/login" method="POST">
                 {% csrf_token %}
-                <label for="logemail">Email</label>
-                <input type="text" name="logemail"><br>
-                <label for="logpassword">Password</label>
-                <input type="password" name="logpassword"><br>
+                <label for="log_email">Email</label>
+                <input type="text" name="log_email"><br>
+                <label for="log_password">Password</label>
+                <input type="password" name="log_password"><br>
                 <input type="submit" value="Login">
             </form>
         </div>

@@ -37,17 +37,23 @@ def login(request):
             messages.error(request, value)
         return redirect('/')
     else:
-        user = User.objects.get(email=request.POST['logemail'])
+        user = User.objects.get(email=request.POST['log_email'])
         request.session['user_id'] = user.id
-        messages.success(request, "You have successfully logged in!")
         return redirect('/wall')
 
 def success(request):
     if 'user_id' not in request.session:
         return redirect('/')
     user = User.objects.get(id=request.session['user_id'])
+    messages = Message.objects.all()
+    comments = Comment.objects.all()
+    wall_test = [messages]
     context = {
-        'user': user
+        'user': user,
+        'messages': messages,
+        'comments': comments,
+        'wall_test': wall_test
+        
     }
     return render(request, 'the_wall.html', context)
 
@@ -59,3 +65,23 @@ def delete_user(request, id):
     x = User.objects.get(id = id)
     x.delete()
     return redirect('/')
+
+def create_message(request):
+    Message.objects.create(
+        user = User.objects.get(id=request.session['user_id']),
+        message = request.POST['user_message']
+    )
+    return redirect('/wall')
+
+def create_comment(request, id):
+    Comment.objects.create(
+        user = User.objects.get(id=request.session['user_id']),
+        message = Message.objects.get(id=id),
+        comment = request.POST['user_comment']
+    )
+    return redirect('/wall')
+
+def delete_message(request, id):
+    x = Message.objects.get(id=id)
+    x.delete()
+    return redirect ('/wall')

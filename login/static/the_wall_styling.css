@@ -1,0 +1,58 @@
+#wrapper {
+    margin: 10px auto;
+    max-width: 900px;
+}
+header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 1px solid #062134;
+    margin-bottom: 30px;
+}
+    #codingdojo {
+        flex-grow: 7;
+    }
+    #welcome {
+        flex-grow: 1;
+    }
+    header a {
+        flex-grow: 0;
+    }
+
+#add_message {
+    margin-left: 10%;
+    max-width: 725px;
+}
+    #message_content {
+        margin-left: 20px;
+        max-width: 500px;
+    }
+    #message_button {
+        color: white;
+        background-color: #3ea8eb;
+        box-shadow: 3px 4px 2px black;
+        float: right;
+        margin: 5px;
+    }
+
+#add_comment {
+    max-width: 570px;
+}
+
+#comment_section {
+    margin-left: 15%;
+}
+    #comment_header {
+        margin-left: 40px;
+    }
+    #comment_content {
+        margin-left: 60px;
+        max-width: 500px;
+    }
+    #comment_button {
+        color: white;
+        background-color: #009e0f;
+        box-shadow: 3px 4px 2px black;
+        float: right;
+    }
+
