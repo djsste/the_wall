@@ -3,6 +3,7 @@ import bcrypt, re
 from datetime import *
 from dateutil.relativedelta import *
 
+
 class UserManager(models.Manager):
     def registration_validator(self, postData):
         errors = {}
@@ -40,7 +41,6 @@ class UserManager(models.Manager):
             errors['log_username'] = "That username and or password is incorrect"
 
         return errors
-        
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -56,6 +56,7 @@ class Message(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = UserManager()
 
 class Comment(models.Model):
     user = models.ForeignKey(User, related_name="comments", on_delete = models.CASCADE)

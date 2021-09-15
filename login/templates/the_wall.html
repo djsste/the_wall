@@ -27,7 +27,7 @@
             {% for message in messages.all reversed %}
                 <p>
                     {{message.user.first_name}} {{message.user.last_name}} {{message.created_at|date:"F dS, Y"}}
-                    {% if message in user.messages.all %}
+                    {% if message in user.messages.all and message_timer < message.created_at  %}
                     <a href="{% url 'delete_message' id=message.id %}">delete</a>
                     {% endif %}
                     

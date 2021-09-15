@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from . models import *
 from django.contrib import messages
+import datetime as datetime
 
 def index(request):
     context = {
@@ -46,14 +47,10 @@ def success(request):
         return redirect('/')
     user = User.objects.get(id=request.session['user_id'])
     messages = Message.objects.all()
-    comments = Comment.objects.all()
-    wall_test = [messages]
     context = {
         'user': user,
         'messages': messages,
-        'comments': comments,
-        'wall_test': wall_test
-        
+        'message_timer': datetime.datetime.now(datetime.timezone.utc) - relativedelta(minutes=30)
     }
     return render(request, 'the_wall.html', context)
 
@@ -85,3 +82,4 @@ def delete_message(request, id):
     x = Message.objects.get(id=id)
     x.delete()
     return redirect ('/wall')
+
